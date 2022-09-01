@@ -28,77 +28,79 @@ function SignupForm({ signup }) {
         const {name, value} = event.target
         setFormData(data => ({...data, [name]: value}))
     }
-
+    console.log(formErrors)
     return (
-        <div className="SignupForm">
-            <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <h2 className="mb-3">Sign Up</h2>
-                <div className="card">
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label>Username</label>
-                                <input 
-                                    name="username"
-                                    className="form-control"
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Email</label>
-                                <input 
-                                    name="email"
-                                    type='email'
-                                    className="form-control"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input 
-                                    name="password"
-                                    type='password'
-                                    className="form-control"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>First Name</label>
-                                <input 
-                                    name="firstName"
-                                    className="form-control"
-                                    value={formData.firstName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Last Name</label>
-                                <input 
-                                    name="lastName"
-                                    className="form-control"
-                                    value={formData.lastName}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            {formErrors.length
-                                ? <Alert type='danger' messages={formErrors} />
-                                : null
-                            }
-
-                            <button 
-                                type="submit"
-                                className="btn btn-primary float-right"
-                                onSubmit={handleSubmit}
-                            >Sign Up</button>
-                        </form>
-                    </div>
+        <section id="book-a-table" className="SignupForm book-a-table">
+            <div className="container" data-aos="fade-up">
+                <div className="section-title">
+                    <h2>Sign Up</h2>
+                    <p>Sign up a new account</p>
                 </div>
+                <form onSubmit={handleSubmit} class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+                    <div className="row">
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Username</label>
+                            <input 
+                                name="username"
+                                className="form-control"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Email</label>
+                            <input 
+                                name="email"
+                                type='email'
+                                className="form-control"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Password</label>
+                            <input 
+                                name="password"
+                                type='password'
+                                className="form-control"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>First Name</label>
+                            <input 
+                                name="firstName"
+                                className="form-control"
+                                value={formData.firstName}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Last Name</label>
+                            <input 
+                                name="lastName"
+                                className="form-control"
+                                value={formData.lastName}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                    
+
+                    {formErrors.length
+                        ? <Alert type='danger' messages={formErrors} className="error-message" />
+                        : null
+                    }
+
+                    <button 
+                        type="submit"
+                        className="btn btn-primary float-right"
+                        onSubmit={handleSubmit}
+                    >Sign Up</button>
+                </form>
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -37,7 +37,7 @@ class User {
         throw new UnauthorizedError('Invalid username/password')
     }
 
-    static async register({username, password, email, firstName, lastName, isAdmin}) {
+    static async register({username, password, email, first_name, last_name, is_admin}) {
         const duplicateCheck = await db.query(
             `SELECT username
              FROM users
@@ -61,7 +61,7 @@ class User {
              is_admin)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING username, email, first_name AS "firstName", last_name AS "lastName", is_admin AS "isAdmin"`,
-            [username, hashedPassword, email, firstName, lastName, isAdmin]
+            [username, hashedPassword, email, first_name, last_name, is_admin]
         )
 
         return result.rows[0]
@@ -142,6 +142,32 @@ class User {
         const user = result.rows[0];
     
         if (!user) throw new NotFoundError(`No user: ${username}`);
+    }
+
+    static async orderDish(username, dish_id) {
+        const preCheck = await db.query(
+            `SELECT id
+            FROM dishes
+            WHERE id=$1`, [dish_id]
+        )
+        const dish = preCheck.rows[0]
+
+        if(!dish) throw new NotFoundError(`No dish: ${dish_id}`)
+
+        const preCheck2 = await db.query(
+            `SELECT username
+             FROM users
+             WHERE username = $1
+            `, [username]
+        )
+        const user = preCheck2.rows[0]
+
+        if(!user) throw new NotFoundError(`No username: ${username}`)
+
+        await db.query(
+            `INSERT INTO orders (username, dish_id)
+            VALUES ($1, $2)`, [username, dish_id]
+        )
     }
 }
 

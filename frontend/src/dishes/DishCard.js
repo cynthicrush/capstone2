@@ -1,19 +1,48 @@
-import React from "react";
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react";
+import UserContext from '../auth/UserContext'
 
-function DishCard({id, title, description, price, image}) {
-    return(
-        <Link className="DishCard card" to={`/dishes/${id}`}>
-            <div className="card-body">
-                <h6 className="card-title">
-                    {title}
-                    {image && <img src={image} alt={title} className='float-right ml-5' />}
-                </h6>
-                <h7>{price}</h7>
-                <p><small>{description}</small></p>
-            </div>
-        </Link>
-    )
+function DishCard({id, title, description, price, dish_url}) {
+  const [ordered, setOrdered] = useState()
+  const { hasOrdered, orderDish } = useContext(UserContext) 
+  const {currentUser} = useContext(UserContext)
+
+  useEffect(() => {
+    setOrdered(hasOrdered(id))
+  }, [id, hasOrdered]) 
+
+  async function handleClick(event) {
+    event.preventDefault()
+    if(hasOrdered(id)) return
+    orderDish(id)
+    setOrdered(true)
+  }
+
+  return(
+    <div className="col-lg-6 menu-item filter-specialty">
+      {dish_url && <img src={dish_url} alt={title} className='menu-img' />}
+      <div className="menu-content">
+        <a href={`/dishes/${id}`}>{title}</a><span>${price}</span>
+      </div>
+      <div className="menu-ingredients">
+        {description}
+      </div>
+      <div className="">
+        {currentUser
+        ?
+          <button 
+              type="submit"
+              className="order-btn"
+              onClick={handleClick}
+              disabled={ordered}
+          >
+          {ordered ? 'Ordered' : 'Add to Order'}
+          </button>
+        : <div></div>
+        }
+        
+      </div>
+    </div> 
+  )
 }
 
 export default DishCard

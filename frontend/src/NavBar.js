@@ -4,44 +4,37 @@ import UserContext from "./auth/UserContext";
 
 function NavBar({ logout }) {
     const { currentUser } = useContext(UserContext)
-    
     return(
-        <nav className="NavBar navbar navbar-expand-md">
-            <Link className="Navbar-brand" to='/'>
-                Jen's Kitchen
-            </Link>
-            {currentUser
-                ? <ul className="navbar-nav ml-auto">
-                    <li className='nav-item mr-4'>
-                        <NavLink className="nav-link" to='/profile'>
-                            {currentUser.username}
-                        </NavLink>
-                    </li>
-                    <li className='nav-item mr-4'>
-                        <NavLink className="nav-link" to='/dishes'>
-                            Dishes
-                        </NavLink>
-                    </li>
-                    <li className='nav-item mr-4'>
-                        <NavLink className="nav-link" to='/' onClick={logout}>
-                            Log Out {currentUser.username}
-                        </NavLink>
-                    </li>
-                </ul>
-                : <ul className="navbar-nav ml-auto">
-                    <li className='nav-item mr-4'>
-                        <NavLink className="nav-link" to='/login'>
-                            Log In
-                        </NavLink>
-                        <li className='nav-item mr-4'>
-                        <NavLink className="nav-link" to='/signup'>
-                            Sign Up
-                        </NavLink>
-                    </li>
-                    </li>
-                </ul>
-            }
-        </nav>
+        <header id="header" className="NavBar fixed-top d-flex align-items-cente">
+            <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+                <h1 className="logo me-auto me-lg-0">
+                    <Link to='/'>
+                        Jen's Kitchen
+                    </Link>
+                </h1>
+                
+                <nav id="navbar" className="navbar order-last order-lg-0">
+                
+                    {!currentUser
+                        ? 
+                        <ul>
+                            <li><a className="nav-link scrollto" href="/">Home</a></li>
+                            <li><a className="nav-link scrollto" href="/dishes">Dishes</a></li>
+                            <li><a className="nav-link scrollto" href="/login">Log In</a></li>
+                            <li><a className="nav-link scrollto" href="/signup">Sign Up</a></li>
+                        </ul>
+                        :
+                            <ul>
+                                <li><a className="nav-link scrollto" href="/">Home</a></li>
+                                <li><a className="nav-link scrollto" href="/dishes">Dishes</a></li>
+                                <li><a className="nav-link" href="/" onClick={logout}>Log Out {currentUser.username}</a></li>
+                            </ul>
+                    }
+                    
+                
+                </nav>
+            </div>
+        </header>
     )
 }
 

@@ -3,7 +3,7 @@ const { NotFoundError, BadRequestError } = require('../expressError')
 // const 
 
 class Dish {
-    static async create({ id, title, description, price, image}) {
+    static async create({ id, title, description, price, dish_url}) {
         const duplicateCheck = await db.query(
             `SELECT id
              FROM dishes
@@ -15,10 +15,10 @@ class Dish {
 
         const result = await db.query(
             `INSERT INTO companies
-             (id, title, description, price, image)
+             (id, title, description, price, dish_url)
              VALUES ($1, $2, $3, $4, $5)
-             RETURNING id, title, description, price, image`,
-             [id, title, description, price, image]
+             RETURNING id, title, description, price, dish_url`,
+             [id, title, description, price, dish_url]
         )
 
         return result.rows[0]

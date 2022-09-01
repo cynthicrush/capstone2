@@ -67,4 +67,14 @@ router.delete("/:username", ensureCorrectUserOrAdmin, async function (req, res, 
     }
 });
 
+router.post('/:username/dishes/:id', ensureCorrectUserOrAdmin, async function(req, res, next) {
+    try{
+        const dishId = +req.params.id;
+        await User.orderDish(req.params.username, dishId)
+        return res.json({ ordered: dishId })
+    } catch(err) {
+        return next(err)
+    }
+})
+
 module.exports = router;

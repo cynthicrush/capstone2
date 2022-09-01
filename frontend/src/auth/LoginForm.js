@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Alert from "../helpers/Alert";
 
-function LoginForm({ signup }) {
+function LoginForm({ login }) {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -13,7 +13,7 @@ function LoginForm({ signup }) {
 
     async function handleSubmit(event) {
         event.preventDefault()
-        let result = await signup(formData)
+        let result = await login(formData)
         if(result.success) {
             history('/dishes')
         } else {
@@ -27,47 +27,52 @@ function LoginForm({ signup }) {
     }
 
     return (
-        <div className="SignupForm">
-            <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                <h2 className="mb-3">Sign Up</h2>
-                <div className="card">
-                    <div className="card-body">
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label>Username</label>
-                                <input 
-                                    name="username"
-                                    className="form-control"
-                                    value={formData.username}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Password</label>
-                                <input 
-                                    name="password"
-                                    type='password'
-                                    className="form-control"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                            </div>
-
-                            {formErrors.length
-                                ? <Alert type='danger' messages={formErrors} />
-                                : null
-                            }
-
-                            <button 
-                                type="submit"
-                                className="btn btn-primary float-right"
-                                onSubmit={handleSubmit}
-                            >Sign Up</button>
-                        </form>
-                    </div>
+        <section id="book-a-table" className="LoginForm book-a-table">
+            <div className="container" data-aos="fade-up">
+                <div className="section-title">
+                    <h2>Log In</h2>
+                    <p>Log in to your account</p>
                 </div>
+                
+                <form onSubmit={handleSubmit}class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+                    <div className="row">
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Username</label>
+                            <input 
+                                name="username"
+                                className="form-control"
+                                value={formData.username}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="col-lg-4 col-md-6 form-group">
+                            <label>Password</label>
+                            <input 
+                                name="password"
+                                type='password'
+                                className="form-control"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+
+                    {formErrors.length
+                        ? <Alert type='danger' messages={formErrors} className="error-message" />
+                        : null
+                    }
+
+                    <div className="">
+                        <button 
+                            type="submit"
+                            className="btn btn-primary float-right"
+                            onSubmit={handleSubmit}
+                        >Sign Up</button>
+                    </div>
+                    
+                </form>
             </div>
-        </div>
+        </section>
     )
 }
 
