@@ -61,7 +61,7 @@ class User {
              is_admin)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING username, email, first_name AS "firstName", last_name AS "lastName", is_admin AS "isAdmin"`,
-            [username, hashedPassword, email, first_name, last_name, is_admin]
+            [username, hashedPassword, email, first_name, last_name, is_admin === true]
         )
 
         return result.rows[0]
