@@ -25,7 +25,6 @@ function LoginForm({ login }) {
         const {name, value} = event.target
         setFormData(data => ({...data, [name]: value}))
     }
-
     return (
         <section id="book-a-table" className="LoginForm book-a-table">
             <div className="container" data-aos="fade-up">
@@ -58,7 +57,7 @@ function LoginForm({ login }) {
                     </div>
 
                     {formErrors.length
-                        ? <Alert type='danger' messages={formErrors} className="error-message" />
+                        ? <Alert type='danger' messages={formErrors} />
                         : null
                     }
 

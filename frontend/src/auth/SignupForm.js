@@ -7,8 +7,8 @@ function SignupForm({ signup }) {
         username: '',
         email: '',
         password: '',
-        firstName: '',
-        lastName: ''
+        first_name: '',
+        last_name: ''
     })
 
     const [formErrors, setFormErrors] = useState([])
@@ -28,7 +28,6 @@ function SignupForm({ signup }) {
         const {name, value} = event.target
         setFormData(data => ({...data, [name]: value}))
     }
-    console.log(formErrors)
     return (
         <section id="book-a-table" className="SignupForm book-a-table">
             <div className="container" data-aos="fade-up">
@@ -70,18 +69,18 @@ function SignupForm({ signup }) {
                         <div className="col-lg-4 col-md-6 form-group">
                             <label>First Name</label>
                             <input 
-                                name="firstName"
+                                name="first_name"
                                 className="form-control"
-                                value={formData.firstName}
+                                value={formData.first_name}
                                 onChange={handleChange}
                             />
                         </div>
                         <div className="col-lg-4 col-md-6 form-group">
                             <label>Last Name</label>
                             <input 
-                                name="lastName"
+                                name="last_name"
                                 className="form-control"
-                                value={formData.lastName}
+                                value={formData.last_name}
                                 onChange={handleChange}
                             />
                         </div>

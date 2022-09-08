@@ -11,12 +11,12 @@ function DishPage() {
             setDishes(dishes)
         }
         getAllDishes()
-    })
+    }, [])
 
     return (
         <section id="menu" className="menu section-bg">
-            <div class="container" data-aos="fade-up">
-                <div class="section-title">
+            <div className="container" data-aos="fade-up">
+                <div className="section-title">
                     <h2>Menu</h2>
                     <p>Check Our Tasty Menu</p>
                 </div>

@@ -6,7 +6,7 @@ class JensKitchenApi {
     static token
     static async request(endpoint, data={}, method='get') {
         const url = `${BASE_URL}/${endpoint}`
-        const headers = { Authorication: `Bearer ${JensKitchenApi.token}`}
+        const headers = { Authorization: `Bearer ${JensKitchenApi.token}`}
         const params = (method === 'get')
             ? data
             : {}
@@ -14,7 +14,7 @@ class JensKitchenApi {
             return (await axios({url, method, data, params, headers})).data;
         } catch(err) {
             console.error('API Error:', err.response)
-            let meassage = err.response.data.error.meassage;
+            let meassage = err.response.data.error.message;
             throw Array.isArray(meassage) ? meassage : [meassage]
         }
     }

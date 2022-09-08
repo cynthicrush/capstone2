@@ -92,8 +92,6 @@ function App() {
                 <Route exact path='/login' element={<LoginForm login={login}/>}/>
                 <Route exact path='/dishes' element={<DishPage />}/>
                 <Route exact path='/dishes/:id' element={<DishDetail />} />
-                {/* <Route exact path='/dishes2/2' element={<DishPage />}/> */}
-
               </Routes>
             </main>
           </div>
