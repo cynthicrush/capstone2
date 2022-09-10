@@ -1,6 +1,6 @@
 const db = require('../db')
 const { NotFoundError, BadRequestError } = require('../expressError')
-// const 
+const {sqlForPartialUpdate} = require('../helpers/sql')
 
 class Dish {
     static async create({ id, title, description, price, dish_url}) {
@@ -14,7 +14,7 @@ class Dish {
             throw new BadRequestError(`Duplicate company: ${id}`)
 
         const result = await db.query(
-            `INSERT INTO companies
+            `INSERT INTO dishes
              (id, title, description, price, dish_url)
              VALUES ($1, $2, $3, $4, $5)
              RETURNING id, title, description, price, dish_url`,
@@ -35,14 +35,16 @@ class Dish {
     }
 
     static async get(id) {
-        const result = await db.query(
+        const dish = await db.query(
             `SELECT *
              FROM dishes
              WHERE id = $1`,
              [id]
         )
         
-        return result.rows[0];
+        if(!dish) throw new NotFoundError(`No dish: ${id}`)
+
+        return dish.rows[0];
     }
 
     static async update(id, data) {
@@ -58,7 +60,7 @@ class Dish {
                                     title,
                                     description,
                                     price,
-                                    image
+                                    dish_url
                           `;
         const result = await db.query(querySql, [...values, id]);
         const dish = result.rows[0];

@@ -13,7 +13,7 @@ function authenticateJWT(req, res, next) {
             console.log(res.locals.user)
         }
         return next()
-    } catch(error) {
+    } catch(err) {
         return next()
     }
 }
@@ -23,8 +23,8 @@ function ensureLoggedIn(req, res, next) {
         if(!res.locals.user) 
             throw new UnauthorizedError()
             return next()
-    } catch(error) {
-        return next(error)
+    } catch(err) {
+        return next(err)
     }
 }
 
@@ -34,8 +34,8 @@ function ensureAdmin(req, res, next) {
             throw new UnauthorizedError()
         }
         return next()
-    } catch(error) {
-        return next(error)
+    } catch(err) {
+        return next(err)
     }
 }
 
@@ -47,8 +47,8 @@ function ensureCorrectUserOrAdmin(req, res, next) {
             throw new UnauthorizedError()
         }
         return next()
-    } catch(error) {
-        return next(error)
+    } catch(err) {
+        return next(err)
     }
 }
 

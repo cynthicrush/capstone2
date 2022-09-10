@@ -15,10 +15,10 @@ class User {
         const result = await db.query(
             `SELECT username,
                     password,
-                    first_name AS "firstName",
-                    last_name AS "lastName",
+                    first_name,
+                    last_name,
                     email,
-                    is_admin AS "isAdmin"
+                    is_admin
              FROM users
              WHERE username = $1`,
              [username]
@@ -60,7 +60,7 @@ class User {
              last_name,
              is_admin)
             VALUES ($1, $2, $3, $4, $5, $6)
-            RETURNING username, email, first_name AS "firstName", last_name AS "lastName", is_admin AS "isAdmin"`,
+            RETURNING username, email, first_name, last_name, is_admin`,
             [username, hashedPassword, email, first_name, last_name, is_admin === true]
         )
 
@@ -70,10 +70,10 @@ class User {
     static async getAll() {
         const result = await db.query(
             `SELECT username,
-                    first_name AS "firstName",
-                    last_name AS "lastName",
+                    first_name,
+                    last_name,
                     email,
-                    is_admin AS "isAdmin"
+                    is_admin
              FROM users
              ORDER BY username`,
         )
@@ -84,10 +84,10 @@ class User {
     static async get(username) {
         const result = await db.query(
             `SELECT username,
-                    first_name AS "firstName",
-                    last_name AS "lastName",
+                    first_name,
+                    last_name,
                     email,
-                    is_admin AS "isAdmin"
+                    is_admin
             FROM users
             WHERE username = $1`,
             [username]
@@ -96,6 +96,15 @@ class User {
         const user = result.rows[0]
 
         if(!user) throw new NotFoundError(`User not found: ${username}`)
+
+        const userOrdersRes = await db.query(
+            `
+                SELECT o.dish_id
+                FROM orders AS o
+                WHERE o.username = $1
+            `, [username]
+        )
+        user.orders = userOrdersRes.rows.map(o => o.dish_id)
 
         return user
     }
@@ -118,10 +127,10 @@ class User {
                           SET ${setCols} 
                           WHERE username = ${usernameVarIdx} 
                           RETURNING username,
-                                    first_name AS "firstName",
-                                    last_name AS "lastName",
+                                    first_name,
+                                    last_name,
                                     email,
-                                    is_admin AS "isAdmin"`;
+                                    is_admin`;
         const result = await db.query(querySql, [...values, username]);
         const user = result.rows[0];
     
